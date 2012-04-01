@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class SparseVector implements Serializable {
+public class SparseVector implements Serializable, Comparable {
 
 
     public SparseVector(float[] vector) {
@@ -184,4 +184,19 @@ public class SparseVector implements Serializable {
     private float[] values;
     private int id;
     private static final long serialVersionUID = 27L;
+	@Override
+	public int compareTo(Object o) {
+		if (o == null) return 0;
+		if (o.getClass() == SparseVector.class) {
+			SparseVector other = (SparseVector) o;
+			if (this.values[0] > other.values[0]) {
+				return 1;
+			} else if (this.values[0] == other.values[0]) {
+				return 0;
+			} else {
+				return -1;
+			}
+		}
+		return 0;
+	}
 }

@@ -155,5 +155,5 @@ public class SparseMatrix implements Serializable {
     }
 
     private ArrayList<String> attributes = new ArrayList<String>();
-    private ArrayList<SparseVector> rows = new ArrayList<SparseVector>();
+    public ArrayList<SparseVector> rows = new ArrayList<SparseVector>();
 }
