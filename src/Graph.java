@@ -22,7 +22,6 @@ public class Graph{
 	}
 	
 	public void loadGraphData(int withWeight) {
-		
 
 	}
 

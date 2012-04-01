@@ -5,8 +5,10 @@ public class Edge {
 	int nodeId2 = -1;
 	int id = -1;
 	
-	public Edge() {
-		
+	public Edge(int id1, int id2, int id) {
+		this.nodeId1 = id1;
+		this.nodeId2 = id2;
+		this.id = id;
 	}
 	
 	public int getOtherNodeId(int id) {

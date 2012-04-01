@@ -23,10 +23,10 @@ public class SparseVector implements Serializable, Comparable {
         ArrayList<Float> values_aux = new ArrayList<Float>();
 
         for (int i = 0; i < vector.length; i++) {
-            if (vector[i] > 0.0f) {
+            //if (vector[i] > 0.0f) {
                 index_aux.add(i);
                 values_aux.add(vector[i]);
-            }
+            //}
         }
 
         this.index = new int[index_aux.size()];
@@ -189,6 +189,10 @@ public class SparseVector implements Serializable, Comparable {
 		if (o == null) return 0;
 		if (o.getClass() == SparseVector.class) {
 			SparseVector other = (SparseVector) o;
+//			if (this.values.length == 0) {
+//				System.out.println("Error!!!!!!!!!!!!!!!!!!!!!");
+//				System.exit(0);
+//			}
 			if (this.values[0] > other.values[0]) {
 				return 1;
 			} else if (this.values[0] == other.values[0]) {
