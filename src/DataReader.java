@@ -39,14 +39,6 @@ public class DataReader {
 					  if (!nodes.get(id1).containsEdge(edgeId))
 						  nodes.get(id1).addEdge(edgeId);
 				  }
-				  if (!nodes.containsKey(id2)) {
-					  Node n = new Node(id2);
-					  n.addEdge(edgeId);
-					  nodes.put(id2, n);
-				  } else {
-					  if (!nodes.get(id2).containsEdge(edgeId))
-						  nodes.get(id2).addEdge(edgeId);
-				  }
 				  //System.out.println (strLine + ": " + id1 +"  " + id2);
 			  }
 			 

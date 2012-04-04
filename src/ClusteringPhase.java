@@ -19,7 +19,7 @@ public class ClusteringPhase {
 	public ArrayList<ArrayList<Integer>> doCluster(Graph g, int k) {
 		Map<Integer, Edge> edges = g.edges;
 		Map<Integer, Node> nodes = g.nodes;
-		int threshold = (int) Math.sqrt(nodes.size());
+		int threshold = (int) Math.sqrt(nodes.size())/2;
 		Random r = new Random();
 		SparseMatrix matrix = new SparseMatrix();
 		Map<Integer, float[]> vectors = new HashMap<Integer, float[]>();
@@ -59,9 +59,9 @@ public class ClusteringPhase {
 		
 		Collections.sort(matrix.rows);
 		
-		for (SparseVector s : matrix.rows) {
-			System.out.println(s.getValue(0));
-		}
+//		for (SparseVector s : matrix.rows) {
+//			System.out.println(s.getValue(0));
+//		}
 		ArrayList<SparseVector> v = matrix.rows;
 		
 		ArrayList<SparseVector> list = new ArrayList<SparseVector>();
@@ -81,6 +81,7 @@ public class ClusteringPhase {
 						for (SparseVector s : list) {
 							tempList.add(s.getId());
 						}
+						//results.add(tempList);
 					}
 					returnResults.addAll(results);
 					// Mining Phase here; Input results - clusters of ids of nodes
