@@ -14,7 +14,7 @@ public class DataReader {
 		try{
 			  // Open the file that is the first 
 			  // command line parameter
-			  FileInputStream fstream = new FileInputStream("slashdot0811.txt");
+			  FileInputStream fstream = new FileInputStream("slashdot0902.txt");
 			  // Get the object of DataInputStream
 			  DataInputStream in = new DataInputStream(fstream);
 			  BufferedReader br = new BufferedReader(new InputStreamReader(in));

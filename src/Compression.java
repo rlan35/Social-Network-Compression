@@ -12,14 +12,14 @@ public class Compression {
 		System.out.println("Edges:" + graph.edges.size());
 		
 		ClusteringPhase cp = new ClusteringPhase();
-		ArrayList<ArrayList<Integer>> results = cp.doCluster(graph, 1);
+		ArrayList<ArrayList<Integer>> results = cp.doCluster(graph, 10);
 		
 //		int count = 0;
 		for (int i = 0; i < results.size(); i++) {
 			System.out.println(results.get(i).size());
-			//System.out.println(results.get(i));
+			System.out.println(results.get(i));
 			//count += results.get(i).size();
 		}
-		System.out.println(results.size());
+		System.out.println("C size:" + results.size());
 	}
 }
