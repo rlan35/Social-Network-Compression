@@ -22,7 +22,7 @@ public class MiningPhase {
 				return 1;
 		}
 	}
-	
+
 	static class MyPatternComparator implements Comparator<Pattern> {
 		public int compare(Pattern x, Pattern y) {
 			int s1 = x.getSavings();
@@ -37,10 +37,10 @@ public class MiningPhase {
 		}
 	}
 
-	private ArrayList<ArrayList<Integer>> doMining(Graph g, ArrayList<ArrayList<Integer>> sets) {
+	static void doMining(Graph g, ArrayList<ArrayList<Integer>> sets) {
 		for (ArrayList<Integer> W : sets) {
 			counter.clear();
-			
+
 			// lines 1-5
 			for (Integer v : W) {
 				Node n = g.nodes.get(v);
@@ -72,15 +72,41 @@ public class MiningPhase {
 				// add L to trie
 				T.insert(L, v);
 			}
-			
+
 			// lines 18-20
 			ArrayList<Pattern> P = new ArrayList<Pattern>();
 			T.findPatterns(P);
 			Collections.sort(P, new MiningPhase.MyPatternComparator());
-			
+
 			// lines 21-30
 			for (Pattern p : P) {
 				VirtualNode v = new VirtualNode(g.nodes.size()+1);
+				// connect VN to targets
+				for (Integer outlink : p.outlinkList) {
+					v.edgeIds.add(outlink);
+				}
+				g.nodes.put(v.id, v);
+
+				// disconnect sources and targets
+				for (Integer target : v.edgeIds) {
+					for (Integer source : p.vertexList) {
+						Node n = g.nodes.get(source);
+						for (int i = 0; i < n.edgeIds.size(); i++) {
+							Integer eid = n.edgeIds.get(i);
+							// check if target in source's edge list
+							if(eid == target) {
+								n.edgeIds.remove(i);
+								break;
+							}
+						}
+					}
+				}
+
+				// connect sources to VN
+				for (Integer source : p.vertexList) {
+					Node n = g.nodes.get(source);
+					n.edgeIds.add(v.id);
+				}
 			}
 		}
 	}
