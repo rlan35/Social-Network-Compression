@@ -39,7 +39,7 @@ public class MiningPhase {
 
 	static void doMining(Graph g, ArrayList<ArrayList<Integer>> sets) {
 		for (ArrayList<Integer> W : sets) {
-			System.out.println("size of the current set is " + W.size());
+			//System.out.println("size of the current set is " + W.size());
 			counter.clear();
 
 			// lines 1-5
@@ -84,7 +84,11 @@ public class MiningPhase {
 			// lines 21-30
 			while (P.size() > 0) {
 				Pattern p = P.get(0); // the pattern with most savings
-				VirtualNode v = new VirtualNode(g.nodes.size()+1);
+				VirtualNode v = null;
+				for(int i=1; v==null; i++) {
+					if(g.nodes.get(g.nodes.size() + i) == null)
+						v = new VirtualNode(g.nodes.size() + i);
+				}
 				// connect VN to targets
 				for (Integer outlink : p.outlinkList) {
 					Edge e = new Edge(v.id, outlink, g.edges.size()+1);
@@ -118,7 +122,7 @@ public class MiningPhase {
 					g.edges.put(e.id, e);				
 					n.edgeIds.add(e.id);
 				}
-				
+
 				// recompute the list of potential VNs
 				Pattern.recompute(P);
 				Collections.sort(P, new MiningPhase.MyPatternComparator()); // what if P is empty!?
