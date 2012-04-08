@@ -14,7 +14,12 @@ public class Compression {
 		ClusteringPhase cp = new ClusteringPhase();
 		ArrayList<ArrayList<Integer>> results = cp.doCluster(graph, 1);
 		
-		System.out.print(results.size());
+		System.out.println(results.size());
 		
+		System.out.println("before mining: # of nodes = " + graph.nodes.size());
+		System.out.println("before mining: # of edges = " + graph.edges.size());
+		MiningPhase.doMining(graph, results);
+		System.out.println("after mining: # of nodes = " + graph.nodes.size());
+		System.out.println("after mining: # of edges = " + graph.edges.size());
 	}
 }

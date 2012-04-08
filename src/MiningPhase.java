@@ -39,6 +39,7 @@ public class MiningPhase {
 
 	static void doMining(Graph g, ArrayList<ArrayList<Integer>> sets) {
 		for (ArrayList<Integer> W : sets) {
+			System.out.println("size of the current set is " + W.size());
 			counter.clear();
 
 			// lines 1-5
@@ -46,12 +47,13 @@ public class MiningPhase {
 				Node n = g.nodes.get(v);
 				for (int i = 0; i < n.edgeIds.size(); i++) {
 					Integer eid = n.edgeIds.get(i);
-					Object obj = counter.get(eid);
+					Integer targetID = g.edges.get(eid).getOtherNodeId(v);
+					Object obj = counter.get(targetID);
 					if (obj == null) {
-						counter.put(eid, new Integer(1));
+						counter.put(targetID, new Integer(1));
 					} else {
 						int tmp = ((Integer) obj).intValue() + 1;
-						counter.put(eid, new Integer(tmp));
+						counter.put(targetID, new Integer(tmp));
 					}
 				}
 			}
@@ -64,8 +66,9 @@ public class MiningPhase {
 				Node n = g.nodes.get(v);
 				for (int i = 0; i < n.edgeIds.size(); i++) {
 					Integer eid = n.edgeIds.get(i);
-					if(counter.get(eid) > 1) {
-						L.add(eid);
+					Integer targetID = g.edges.get(eid).getOtherNodeId(v);
+					if(counter.get(targetID) > 1) {
+						L.add(targetID);
 					}
 				}
 				Collections.sort(L, new MiningPhase.MyCountComparator());
@@ -79,23 +82,29 @@ public class MiningPhase {
 			Collections.sort(P, new MiningPhase.MyPatternComparator());
 
 			// lines 21-30
-			for (Pattern p : P) {
+			while (P.size() > 0) {
+				Pattern p = P.get(0); // the pattern with most savings
 				VirtualNode v = new VirtualNode(g.nodes.size()+1);
 				// connect VN to targets
 				for (Integer outlink : p.outlinkList) {
-					v.edgeIds.add(outlink);
+					Edge e = new Edge(v.id, outlink, g.edges.size()+1);
+					g.edges.put(e.id, e);
+					v.edgeIds.add(e.id);
 				}
 				g.nodes.put(v.id, v);
 
 				// disconnect sources and targets
-				for (Integer target : v.edgeIds) {
+				for (Integer outlink : v.edgeIds) {
+					Integer target = g.edges.get(outlink).getOtherNodeId(v.id);
 					for (Integer source : p.vertexList) {
 						Node n = g.nodes.get(source);
 						for (int i = 0; i < n.edgeIds.size(); i++) {
 							Integer eid = n.edgeIds.get(i);
-							// check if target in source's edge list
-							if(eid == target) {
+							Integer targetID = g.edges.get(eid).getOtherNodeId(source); //edgeId2!?
+							// check if source and target are connected
+							if(targetID == target) {
 								n.edgeIds.remove(i);
+								g.edges.remove(eid);
 								break;
 							}
 						}
@@ -105,8 +114,14 @@ public class MiningPhase {
 				// connect sources to VN
 				for (Integer source : p.vertexList) {
 					Node n = g.nodes.get(source);
-					n.edgeIds.add(v.id);
+					Edge e = new Edge(source, v.id, g.edges.size()+1);
+					g.edges.put(e.id, e);				
+					n.edgeIds.add(e.id);
 				}
+				
+				// recompute the list of potential VNs
+				Pattern.recompute(P);
+				Collections.sort(P, new MiningPhase.MyPatternComparator()); // what if P is empty!?
 			}
 		}
 	}
