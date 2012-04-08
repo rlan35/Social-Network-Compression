@@ -39,7 +39,7 @@ public class DataReader {
 					  if (!nodes.get(id1).containsEdge(edgeId))
 						  nodes.get(id1).addEdge(edgeId);
 				  }
-				  //System.out.println (strLine + ": " + id1 +"  " + id2);
+
 			  }
 			 
 
