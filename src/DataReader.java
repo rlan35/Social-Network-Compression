@@ -14,7 +14,7 @@ public class DataReader {
 		try{
 			  // Open the file that is the first 
 			  // command line parameter
-			  FileInputStream fstream = new FileInputStream("slashdot0902.txt");
+			  FileInputStream fstream = new FileInputStream("Slashdot0902.txt");
 			  // Get the object of DataInputStream
 			  DataInputStream in = new DataInputStream(fstream);
 			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -33,11 +33,11 @@ public class DataReader {
 				  edges.put(edgeId, e);
 				  if (!nodes.containsKey(id1)) {
 					  Node n = new Node(id1);
-					  n.addEdge(edgeId);
+					  n.addEdge(edgeId, id2);
 					  nodes.put(id1, n);
 				  } else {
 					  if (!nodes.get(id1).containsEdge(edgeId))
-						  nodes.get(id1).addEdge(edgeId);
+						  nodes.get(id1).addEdge(edgeId, id2);
 				  }
 
 			  }
