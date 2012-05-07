@@ -10,6 +10,8 @@ public class Node {
 	int id = -1;
 	int degree = 0;
 	Map<Integer, Integer> otherNodeIds;
+	boolean isVirtual = false;
+	
 	public Node(int id) {
 		this.id = id;
 		edgeIds = new ArrayList<Integer>();

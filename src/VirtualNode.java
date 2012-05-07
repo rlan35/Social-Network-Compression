@@ -1,10 +1,13 @@
+import java.util.ArrayList;
+
 
 public class VirtualNode extends Node {
-
+	ArrayList<Integer> pointedByNodes;
+	
 	public VirtualNode(int id) {
 		super(id);
-		// TODO Auto-generated constructor stub
+		isVirtual = true;
+		pointedByNodes = new ArrayList<Integer>();
 	}
 
-	
 }

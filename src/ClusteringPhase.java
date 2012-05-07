@@ -14,6 +14,8 @@ public class ClusteringPhase {
 	Map<Integer, SparseVector> vectorsMap;
 	private double hashValue(int id, int coef)	{
 		double hashValue = (MaxCoef - coef) * id;
+		hashValue = hashValue % coef;
+		hashValue = Math.pow(hashValue, coef % 10);
 		return hashValue;
 	}
 	
